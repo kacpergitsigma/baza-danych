@@ -11,13 +11,14 @@ public class Game {
     public int minPlayers;
     public int maxPlayers;
     public int ageCategory;
-    public int category;
+    public String category;
 
-    public Game(String name, int minPlayers, int maxPlayers, int ageCategory, int category) {
+    public Game(String name, int minPlayers, int maxPlayers, int ageCategory, String category) {
         this.name = name;
         this.minPlayers = minPlayers;
         this.maxPlayers = maxPlayers;
         this.ageCategory = ageCategory;
         this.category = category;
     }
+    public Game() {}
 }
