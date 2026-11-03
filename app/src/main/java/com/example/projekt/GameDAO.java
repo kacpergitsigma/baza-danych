@@ -1,10 +1,10 @@
 package com.example.projekt;
 
-import androidx.room3.Dao;
-import androidx.room3.Delete;
-import androidx.room3.Insert;
-import androidx.room3.Query;
-import androidx.room3.Update;
+import androidx.room.Dao;
+import androidx.room.Delete;
+import androidx.room.Insert;
+import androidx.room.Query;
+import androidx.room.Update;
 
 import java.util.List;
 
@@ -21,5 +21,5 @@ public interface GameDAO {
     @Query("SELECT * FROM game")
     public List<Game> getAllGames();
     @Query("SELECT name FROM game WHERE minPlayers = :value")
-    public String getGameNameByMinPlayers();
+    public String getGameNameByMinPlayers(int value);
 }

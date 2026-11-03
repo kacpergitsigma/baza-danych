@@ -1,9 +1,9 @@
 package com.example.projekt;
 
-import androidx.room3.Database;
-import androidx.room3.RoomDatabase;
+import androidx.room.Database;
+import androidx.room.RoomDatabase;
 
-@Database(entities = {Game.class}, version = 1)
+@Database(entities = {Game.class}, version = 2)
 public abstract class GameDatabase extends RoomDatabase {
     public abstract GameDAO getGameDao();
 }
