@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">projekt</string>
+    <string-array name="category">
+        <item>logical</item>
+        <item>strategic</item>
+        <item>classic</item>
+        <item>gambling</item>
+    </string-array>
 </resources>
