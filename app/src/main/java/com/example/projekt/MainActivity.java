@@ -2,8 +2,11 @@ package com.example.projekt;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
 
 import androidx.activity.EdgeToEdge;
@@ -13,6 +16,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.room.RoomDatabase;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     private Button addGameButton;
@@ -21,6 +26,9 @@ public class MainActivity extends AppCompatActivity {
     private EditText maxPlayers;
     private EditText ageCategory;
     private Spinner categorySpinner;
+    private ListView gameListView;
+    private List<Game> gameList;
+    private ArrayAdapter<Game> arrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,12 +46,38 @@ public class MainActivity extends AppCompatActivity {
         maxPlayers = findViewById(R.id.maxPlayers);
         ageCategory = findViewById(R.id.ageCategory);
         categorySpinner = findViewById(R.id.categorySpinner);
+        gameListView = findViewById(R.id.gameListView);
 
         GameDatabase gameDatabase = new RoomDatabase.Builder<>(
                 getApplicationContext(),
                 GameDatabase.class,
                 "game_db"
         ).allowMainThreadQueries().build();
+
+        gameList = gameDatabase.getGameDao().getAllGames();
+        arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, gameList);
+        gameListView.setAdapter(arrayAdapter);
+
+        gameListView.setOnItemLongClickListener(
+                new AdapterView.OnItemLongClickListener() {
+                    @Override
+                    public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        gameDatabase.getGameDao().deleteGame(gameList.get(i));
+                        gameList.remove(i);
+                        arrayAdapter.notifyDataSetChanged();
+                        return false;
+                    }
+                }
+        );
+
+        gameListView.setOnItemClickListener(
+                new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                    }
+                }
+        );
 
         addGameButton.setOnClickListener(
                 new View.OnClickListener() {
@@ -57,6 +91,8 @@ public class MainActivity extends AppCompatActivity {
                                 categorySpinner.getSelectedItem().toString()
                         );
                         gameDatabase.getGameDao().insertGame(game);
+                        gameList.add(game);
+                        arrayAdapter.notifyDataSetChanged();
                     }
                 }
         );

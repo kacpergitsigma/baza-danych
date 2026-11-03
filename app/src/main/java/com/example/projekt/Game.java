@@ -1,5 +1,6 @@
 package com.example.projekt;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -21,4 +22,13 @@ public class Game {
         this.category = category;
     }
     public Game() {}
+
+    @Override
+    public String toString() {
+        return  "name: " + name+
+                "\nminPlayers: " + minPlayers +
+                "\nmaxPlayers: " + maxPlayers +
+                "\nageCategory: " + ageCategory +
+                "\ncategory: " + category;
+    }
 }
