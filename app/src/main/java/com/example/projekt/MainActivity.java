@@ -1,5 +1,8 @@
 package com.example.projekt;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -17,10 +20,12 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.room.RoomDatabase;
 
 import java.util.List;
+import java.util.Stack;
 
 public class MainActivity extends AppCompatActivity {
 
     private Button addGameButton;
+    private Button updateGameButton;
     private EditText gameName;
     private EditText minPlayers;
     private EditText maxPlayers;
@@ -41,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
         addGameButton = findViewById(R.id.addGameButton);
+        updateGameButton = findViewById(R.id.updateGameButton);
         gameName = findViewById(R.id.gameName);
         minPlayers = findViewById(R.id.minPlayers);
         maxPlayers = findViewById(R.id.maxPlayers);
@@ -74,7 +80,44 @@ public class MainActivity extends AppCompatActivity {
                 new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        addGameButton.setVisibility(GONE);
+                        updateGameButton.setVisibility(VISIBLE);
+                        var game = gameList.get(i);
+                        gameName.setText(game.name);
+                        minPlayers.setText(String.valueOf(game.minPlayers));
+                        maxPlayers.setText(String.valueOf(game.maxPlayers));
+                        ageCategory.setText(String.valueOf(game.ageCategory));
+                        String[] categoryArray = {
+                                "logical",
+                                "strategic",
+                                "classic",
+                                "gambling"
+                        };
+                        int categoryId = 0;
+                        for (int j = 0; j < categoryArray.length; j++) {
+                            if (game.category.equals(categoryArray[j])) {
+                                categoryId = j;
+                            }
+                        }
+                        categorySpinner.setSelection(categoryId);
+                    }
+                }
+        );
 
+        updateGameButton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        addGameButton.setVisibility(VISIBLE);
+                        updateGameButton.setVisibility(GONE);
+                        var game = new Game(
+                                gameName.getText().toString(),
+                                Integer.parseInt(minPlayers.getText().toString()),
+                                Integer.parseInt(maxPlayers.getText().toString()),
+                                Integer.parseInt(ageCategory.getText().toString()),
+                                categorySpinner.getSelectedItem().toString()
+                        );
+                        gameDatabase.getGameDao().updateGame(game);
                     }
                 }
         );

@@ -62,6 +62,14 @@
         android:text="Dodaj"
         android:layout_gravity="center" />
 
+    <Button
+        android:id="@+id/updateGameButton"
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:text="Zaktualizuj"
+        android:visibility="gone"
+        android:layout_gravity="center" />
+
     <ListView
         android:id="@+id/gameListView"
         android:layout_width="match_parent"
