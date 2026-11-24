@@ -41,7 +41,7 @@ public interface ExampleDao {
     public void update(ExampleTable exampleTable);
     @Query("SELECT * FROM ExampleTable")
     public List<ExampleTable> getAllExamples();
-    @Query("SELECT name FROM ExampleTable WHERE id = :value")
+    @Query("SELECT * FROM ExampleTable WHERE id = :value")
     public String getExampleTableById();
 }
 ```
