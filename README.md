@@ -18,7 +18,7 @@ public class ExampleTable {
     @PrimaryKey(autoGenerate = true)
     public int id;
 
-    public Game() {}
+    public ExampleTable() {}
 }
 ```
 ### DAO dla klasy
